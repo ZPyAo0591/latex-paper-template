@@ -2,7 +2,7 @@
 
 A clean and reusable LaTeX template for academic and research papers.
 
-The template provides a simple research paper layout with commonly used components for writing, including author and affiliation formatting, mathematics, figures, tables, algorithms, citations, cross references, and appendices.
+The template provides a simple research paper layout with commonly used components for writing, including author and affiliation formatting, mathematics, theorems, figures, tables, algorithms, citations, cross references, and appendices.
 
 Most formatting settings are defined in `template.sty`, while `main.tex` serves as an example document and a quick reference for common usage.
 
@@ -10,12 +10,12 @@ Most formatting settings are defined in `template.sty`, while `main.tex` serves 
 
 Clone or download the repository, edit `main.tex`, and compile it with your preferred LaTeX workflow or upload the project to Overleaf.
 
-```latex id="7n2c0v"
+```latex
 \documentclass{article}
 \usepackage{template}
 ```
 
-See `main.tex` for examples of author formatting, affiliations, figures, tables, equations, citations, algorithms, and appendices.
+See `main.tex` for examples of author formatting, affiliations, figures, tables, equations, theorems, citations, algorithms, and appendices.
 
 ## Files
 
@@ -37,4 +37,4 @@ For formal submissions, always use the official template and formatting requirem
 
 ## License
 
-MIT License.
+This project is released under the MIT License.
