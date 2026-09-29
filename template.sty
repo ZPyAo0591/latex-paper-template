@@ -1,0 +1,569 @@
+% ============================================================
+% template.sty
+% General research paper template
+% ============================================================
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{template}[2026/09/28 General research paper template]
+
+% ============================================================
+% Page layout
+% ============================================================
+
+% General page layout for research papers.
+% For formal submissions, always follow the formatting
+% requirements of the relevant journal, conference, or institution.
+\RequirePackage[
+    letterpaper,
+    left=1.25in,
+    right=1.25in,
+    top=1.0in,
+    bottom=1.0in
+]{geometry}
+
+% ============================================================
+% Typography
+% ============================================================
+
+\RequirePackage{
+    times,
+    microtype,
+    url,
+    soul,
+    enumitem,
+    pifont
+}
+
+\RequirePackage[normalem]{ulem}
+
+% ============================================================
+% Font sizes
+%
+%   normal text      10pt / 11pt
+%   small             9pt / 10pt
+%   footnote          8pt / 9.5pt
+%   large            12pt / 14pt
+%   Large            14pt / 16pt
+%   LARGE            17pt / 20pt
+% ============================================================
+
+\makeatletter
+
+\renewcommand{\normalsize}{%
+    \@setfontsize\normalsize{10pt}{11pt}%
+}
+
+\renewcommand{\small}{%
+    \@setfontsize\small{9pt}{10pt}%
+}
+
+\renewcommand{\footnotesize}{%
+    \@setfontsize\footnotesize{8pt}{9.5pt}%
+}
+
+\renewcommand{\scriptsize}{%
+    \@setfontsize\scriptsize{7pt}{8pt}%
+}
+
+\renewcommand{\tiny}{%
+    \@setfontsize\tiny{6pt}{7pt}%
+}
+
+\renewcommand{\large}{%
+    \@setfontsize\large{12pt}{14pt}%
+}
+
+\renewcommand{\Large}{%
+    \@setfontsize\Large{14pt}{16pt}%
+}
+
+\renewcommand{\LARGE}{%
+    \@setfontsize\LARGE{17pt}{20pt}%
+}
+
+\renewcommand{\huge}{%
+    \@setfontsize\huge{20pt}{23pt}%
+}
+
+\renewcommand{\Huge}{%
+    \@setfontsize\Huge{25pt}{28pt}%
+}
+
+\makeatother
+
+\normalsize
+
+% ============================================================
+% Colors
+% ============================================================
+
+\RequirePackage[table]{xcolor}
+
+\definecolor{navy}{RGB}{65,105,225}
+
+% ============================================================
+% Mathematics
+% ============================================================
+
+\RequirePackage{
+    mathtools,
+    amssymb,
+    amsthm,
+    nicefrac,
+    cancel,
+    bm
+}
+
+\RequirePackage{fontawesome5}
+
+\renewcommand{\qedsymbol}{$\blacksquare$}
+
+
+% ============================================================
+% Theorem environments
+% ============================================================
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{property}[theorem]{Property}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{assumption}[theorem]{Assumption}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+% ============================================================
+% Bibliography
+% ============================================================
+
+\RequirePackage[numbers,sort&compress]{natbib}
+
+% ============================================================
+% Hyperlinks and references
+%
+% Keep these before math_commands.tex because that file may
+% contain \crefname and other cleveref commands.
+% ============================================================
+
+\RequirePackage[
+    pagebackref,
+    breaklinks,
+    colorlinks,
+    linkcolor=red,
+    citecolor=navy,
+    urlcolor=navy
+]{hyperref}
+
+\RequirePackage[
+    capitalize,
+    noabbrev
+]{cleveref}
+
+% ============================================================
+% Custom math/reference commands
+% ============================================================
+
+\InputIfFileExists{math_commands.tex}{}{}
+
+% ============================================================
+% Figures and tables
+% ============================================================
+
+\RequirePackage{
+    graphicx,
+    subcaption,
+    wrapfig,
+    overpic,
+    booktabs,
+    array,
+    multirow,
+    adjustbox
+}
+
+% ============================================================
+% Algorithms
+% ============================================================
+
+\RequirePackage{
+    algorithm,
+    algpseudocode
+}
+
+% ============================================================
+% Layout, diagrams, and document structure
+% ============================================================
+
+\RequirePackage{
+    multicol,
+    tikz,
+    stfloats,
+    etoc,
+    smartdiagram,
+    marginnote,
+    makeidx
+}
+
+% ============================================================
+% Boxes
+% ============================================================
+
+\RequirePackage[most]{tcolorbox}
+
+
+% ============================================================
+% Title
+% ============================================================
+
+\makeatletter
+
+\renewcommand{\@maketitle}{%
+    \newpage
+    \begingroup
+    \centering
+
+    % Paper title: 15.5pt / 19pt bold
+    {\fontsize{15.5pt}{19pt}\selectfont\bfseries\@title\par}
+    % Title -> authors
+    \vskip 0.25in
+
+    % Authors
+    {\normalsize
+        \lineskip .5em
+        \begin{tabular}[t]{c}
+            \@author
+        \end{tabular}\par
+    }
+    \endgroup
+
+    % Author block -> abstract/main text
+    \vskip 0.30in
+}
+
+\makeatother
+
+% ============================================================
+% Author formatting
+% ============================================================
+
+% Spacing between the author rows and affiliations.
+\newlength{\PaperAuthorAffiliationSep}
+\setlength{\PaperAuthorAffiliationSep}{0.75em}
+
+% Author separators.
+\newcommand{\AuthorAnd}{\quad}
+\newcommand{\AuthorAND}{\\[1em]}
+
+\newcommand{\PaperAuthor}[3][]{%
+    \begingroup
+    \PaperThisEqualContribfalse
+    \PaperThisCorrespondingAuthorfalse
+    \begin{tabular}{c}
+        #2%
+        \if\relax\detokenize{#1}\relax
+        \else
+            \,\textsuperscript{#1}%
+        \fi
+        \ifPaperThisEqualContrib
+            \,\textsuperscript{\EqualContribSymbol}%
+        \fi
+        \ifPaperThisCorrespondingAuthor
+            \,\textsuperscript{\CorrespondingAuthorSymbol}%
+        \fi
+        \\
+        \texttt{#3}
+    \end{tabular}%
+    \endgroup
+}
+
+\newcommand{\PaperAffiliation}[2][]{%
+    \if\relax\detokenize{#1}\relax
+        #2%
+    \else
+        \textsuperscript{#1}\,#2%
+    \fi
+}
+
+\newcommand{\PaperProject}[1]{%
+    \href{#1}{\faGithub\ #1}%
+}
+
+% ============================================================
+% Abstract
+%
+%   heading          11pt / 13pt bold small caps
+%   body             10pt / 11pt
+%
+% The body matches the main text size.
+% ============================================================
+
+\makeatletter
+
+\renewenvironment{abstract}{%
+    \begin{list}{}{%
+        \setlength{\leftmargin}{0.6in}%
+        \setlength{\rightmargin}{0.6in}%
+    }%
+    \item[]
+    {\centering
+        \fontsize{11pt}{13pt}\selectfont
+        \scshape\bfseries
+        \abstractname\par
+    }%
+    \vspace{0.5ex}
+    \normalsize
+}{%
+    \end{list}
+    \vspace{1.0ex}%
+}
+
+\makeatother
+
+
+
+% ============================================================
+% Section headings
+%
+%   section          12pt / 14pt small caps
+%   subsection       10pt / 11pt small caps
+%   subsubsection    10pt / 11pt small caps
+%   paragraph        10pt / 11pt bold
+%   subparagraph     10pt / 11pt small caps
+% ============================================================
+
+\makeatletter
+
+\renewcommand{\section}{%
+    \@startsection{section}{1}{\z@}%
+    {-2.0ex \@plus -0.5ex \@minus -.2ex}%
+    {1.5ex \@plus .3ex \@minus .2ex}%
+    {\normalfont\large\scshape\raggedright}%
+}
+
+\renewcommand{\subsection}{%
+    \@startsection{subsection}{2}{\z@}%
+    {-1.8ex \@plus -0.5ex \@minus -.2ex}%
+    {0.8ex \@plus .2ex}%
+    {\normalfont\normalsize\scshape\raggedright}%
+}
+
+\renewcommand{\subsubsection}{%
+    \@startsection{subsubsection}{3}{\z@}%
+    {-1.5ex \@plus -0.5ex \@minus -.2ex}%
+    {0.5ex \@plus .2ex}%
+    {\normalfont\normalsize\scshape\raggedright}%
+}
+
+\renewcommand{\paragraph}{%
+    \@startsection{paragraph}{4}{\z@}%
+    {1.5ex \@plus .5ex \@minus .2ex}%
+    {-1em}%
+    {\normalfont\normalsize\bfseries}%
+}
+
+\renewcommand{\subparagraph}{%
+    \@startsection{subparagraph}{5}{\z@}%
+    {1.5ex \@plus .5ex \@minus .2ex}%
+    {-1em}%
+    {\normalfont\normalsize\scshape}%
+}
+
+\makeatother
+
+
+% ============================================================
+% Table of contents behavior
+% ============================================================
+
+% Main paper entries are shown down to subsection level.
+% Appendix entries are hidden from the main TOC.
+\etocsettagdepth{papermain}{subsection}
+\etocsettagdepth{paperappendix}{none}
+
+% Appendix-only table of contents.
+\newcommand{\PaperPrintAppendixTOC}{%
+    \begingroup
+
+    % Hide main-paper entries.
+    \etocsettagdepth{papermain}{none}%
+
+    % Show appendix entries down to subsection level.
+    \etocsettagdepth{paperappendix}{subsection}%
+
+    \etocsettocstyle{%
+        \section*{Appendix Contents}%
+    }{}%
+
+    \tableofcontents
+
+    \endgroup
+}
+
+
+
+% ============================================================
+% Paragraph formatting
+%
+% Paragraph formatting:
+%   no first-line indentation
+%   small vertical space between paragraphs
+% ============================================================
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt plus 0.5pt minus 0.5pt}
+
+% ============================================================
+% Optional author notes
+%
+% Usage:
+%   Alice\eqcontrib
+%   Bob\eqcontrib
+%
+%   Alice\corrauthor
+%
+% Commands may also be combined:
+%   Alice\eqcontrib\corrauthor
+%
+% If neither command is used, no author-note footnote appears.
+% ============================================================
+
+% Symbols
+\newcommand{\EqualContribSymbol}{\ensuremath{\star}}
+\newcommand{\CorrespondingAuthorSymbol}{\ensuremath{\dagger}}
+
+% Footnote text
+\newcommand{\EqualContribText}{Equal contribution.}
+\newcommand{\CorrespondingAuthorText}{Corresponding author.}
+
+% Internal flags
+\newif\ifPaperEqualContribUsed
+\newif\ifPaperCorrespondingAuthorUsed
+\newif\ifPaperThisEqualContrib
+\newif\ifPaperThisCorrespondingAuthor
+
+\PaperEqualContribUsedfalse
+\PaperCorrespondingAuthorUsedfalse
+\PaperThisEqualContribfalse
+\PaperThisCorrespondingAuthorfalse
+
+% Author marks
+\newcommand{\eqcontrib}{%
+    \global\PaperEqualContribUsedtrue
+    \PaperThisEqualContribtrue
+}
+
+\newcommand{\corrauthor}{%
+    \global\PaperCorrespondingAuthorUsedtrue
+    \PaperThisCorrespondingAuthortrue
+}
+
+% Unnumbered author-note footnote helper
+\newcommand{\PaperAuthorFootnote}[1]{%
+    \begingroup
+    \renewcommand{\thefootnote}{}%
+    \footnotetext[0]{#1}%
+    \endgroup
+}
+
+% Print only the author notes that are actually used.
+\newcommand{\PaperPrintAuthorNotes}{%
+    \ifPaperEqualContribUsed
+        \ifPaperCorrespondingAuthorUsed
+            \PaperAuthorFootnote{%
+                \textsuperscript{\EqualContribSymbol}\,
+                \EqualContribText
+                \quad
+                \textsuperscript{\CorrespondingAuthorSymbol}\,
+                \CorrespondingAuthorText
+            }%
+        \else
+            \PaperAuthorFootnote{%
+                \textsuperscript{\EqualContribSymbol}\,
+                \EqualContribText
+            }%
+        \fi
+    \else
+        \ifPaperCorrespondingAuthorUsed
+            \PaperAuthorFootnote{%
+                \textsuperscript{\CorrespondingAuthorSymbol}\,
+                \CorrespondingAuthorText
+            }%
+        \fi
+    \fi
+}
+% ============================================================
+% Automatic hooks
+% ============================================================
+
+\AtBeginDocument{%
+
+    % Mark the beginning of the main-paper portion of the TOC.
+    \etocdepthtag.toc{papermain}%
+
+    % --------------------------------------------------------
+    % Automatically append author notes after \maketitle.
+    % --------------------------------------------------------
+
+    \let\PaperOriginalMaketitle\maketitle
+
+    \renewcommand{\maketitle}{%
+        \PaperOriginalMaketitle
+        \PaperPrintAuthorNotes
+    }%
+
+    % --------------------------------------------------------
+    % Automatically insert an appendix-only TOC after \appendix.
+    % --------------------------------------------------------
+
+    \let\PaperOriginalAppendix\appendix
+
+    \renewcommand{\appendix}{%
+        \PaperOriginalAppendix
+        \etocdepthtag.toc{paperappendix}%
+        \PaperPrintAppendixTOC
+    }%
+}
+
+% ============================================================
+% Float placement
+% ============================================================
+
+\renewcommand{\topfraction}{0.90}
+\renewcommand{\bottomfraction}{0.80}
+\renewcommand{\textfraction}{0.10}
+\renewcommand{\floatpagefraction}{0.80}
+
+% ============================================================
+% List formatting
+% ============================================================
+
+\setlist{
+    topsep=4pt,
+    itemsep=2pt,
+    parsep=0pt,
+    partopsep=0pt
+}
+
+% ============================================================
+% Display math spacing
+% ============================================================
+
+\setlength{\abovedisplayskip}{7pt plus 2pt minus 2pt}
+\setlength{\belowdisplayskip}{7pt plus 2pt minus 2pt}
+\setlength{\abovedisplayshortskip}{3pt plus 1pt}
+\setlength{\belowdisplayshortskip}{5pt plus 1pt minus 1pt}
+
+% ============================================================
+% Footnotes
+% ============================================================
+
+\setlength{\footnotesep}{6.5pt}
+\setlength{\skip\footins}{9pt plus 2pt minus 1pt}
+
+\endinput
+
