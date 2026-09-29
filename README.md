@@ -37,4 +37,4 @@ For formal submissions, always use the official template and formatting requirem
 
 ## License
 
-This project is released under the MIT License.
+This project is released under the LaTeX Project Public License 1.3c (LPPL 1.3c).
