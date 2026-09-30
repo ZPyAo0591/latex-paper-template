@@ -28,10 +28,7 @@
 \RequirePackage{
     times,
     microtype,
-    url,
-    soul,
-    enumitem,
-    pifont
+    enumitem
 }
 
 \RequirePackage[normalem]{ulem}
@@ -109,15 +106,12 @@
     mathtools,
     amssymb,
     amsthm,
-    nicefrac,
-    cancel,
     bm
 }
 
 \RequirePackage{fontawesome5}
 
 \renewcommand{\qedsymbol}{$\blacksquare$}
-
 
 % ============================================================
 % Theorem environments
@@ -178,12 +172,9 @@
 \RequirePackage{
     graphicx,
     subcaption,
-    wrapfig,
-    overpic,
     booktabs,
     array,
-    multirow,
-    adjustbox
+    multirow
 }
 
 % ============================================================
@@ -196,25 +187,10 @@
 }
 
 % ============================================================
-% Layout, diagrams, and document structure
+% Document structure
 % ============================================================
 
-\RequirePackage{
-    multicol,
-    tikz,
-    stfloats,
-    etoc,
-    smartdiagram,
-    marginnote,
-    makeidx
-}
-
-% ============================================================
-% Boxes
-% ============================================================
-
-\RequirePackage[most]{tcolorbox}
-
+\RequirePackage{etoc}
 
 % ============================================================
 % Title
@@ -229,6 +205,7 @@
 
     % Paper title: 15.5pt / 19pt bold
     {\fontsize{15.5pt}{19pt}\selectfont\bfseries\@title\par}
+
     % Title -> authors
     \vskip 0.25in
 
@@ -239,6 +216,7 @@
             \@author
         \end{tabular}\par
     }
+
     \endgroup
 
     % Author block -> abstract/main text
@@ -255,11 +233,11 @@
 \newlength{\PaperAuthorAffiliationSep}
 \setlength{\PaperAuthorAffiliationSep}{0.75em}
 
-% Author separators.
 \newcommand{\PaperAuthor}[3][]{%
     \begingroup
     \PaperThisEqualContribfalse
     \PaperThisCorrespondingAuthorfalse
+
     \begin{tabular}{c}
         #2%
         \if\relax\detokenize{#1}\relax
@@ -275,6 +253,7 @@
         \\
         \texttt{#3}
     \end{tabular}%
+
     \endgroup
 }
 
@@ -320,8 +299,6 @@
 }
 
 \makeatother
-
-
 
 % ============================================================
 % Section headings
@@ -372,7 +349,6 @@
 
 \makeatother
 
-
 % ============================================================
 % Table of contents behavior
 % ============================================================
@@ -401,8 +377,6 @@
     \endgroup
 }
 
-
-
 % ============================================================
 % Paragraph formatting
 %
@@ -416,17 +390,6 @@
 
 % ============================================================
 % Optional author notes
-%
-% Usage:
-%   Alice\eqcontrib
-%   Bob\eqcontrib
-%
-%   Alice\corrauthor
-%
-% Commands may also be combined:
-%   Alice\eqcontrib\corrauthor
-%
-% If neither command is used, no author-note footnote appears.
 % ============================================================
 
 % Symbols
@@ -493,6 +456,7 @@
         \fi
     \fi
 }
+
 % ============================================================
 % Automatic hooks
 % ============================================================
@@ -563,4 +527,3 @@
 \setlength{\skip\footins}{9pt plus 2pt minus 1pt}
 
 \endinput
-
