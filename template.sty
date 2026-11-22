@@ -6,6 +6,20 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{template}[2026/09/28 General research paper template]
 
+
+% ============================================================
+% Package options
+% ============================================================
+
+\newif\ifPaperAppendixTOC
+\PaperAppendixTOCfalse
+
+\DeclareOption{appendixtoc}{\PaperAppendixTOCtrue}
+\DeclareOption{noappendixtoc}{\PaperAppendixTOCfalse}
+
+\ProcessOptions\relax
+
+
 % ============================================================
 % Page layout
 % ============================================================
@@ -114,25 +128,6 @@
 \renewcommand{\qedsymbol}{$\blacksquare$}
 
 % ============================================================
-% Theorem environments
-% ============================================================
-
-\theoremstyle{plain}
-\newtheorem{theorem}{Theorem}[section]
-\newtheorem{property}[theorem]{Property}
-\newtheorem{proposition}[theorem]{Proposition}
-\newtheorem{lemma}[theorem]{Lemma}
-\newtheorem{corollary}[theorem]{Corollary}
-
-\theoremstyle{definition}
-\newtheorem{definition}[theorem]{Definition}
-\newtheorem{assumption}[theorem]{Assumption}
-
-\theoremstyle{remark}
-\newtheorem{remark}[theorem]{Remark}
-\newtheorem{conjecture}[theorem]{Conjecture}
-
-% ============================================================
 % Bibliography
 % ============================================================
 
@@ -158,6 +153,38 @@
     capitalize,
     noabbrev
 ]{cleveref}
+
+% ============================================================
+% Theorem environments
+% ============================================================
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{property}[theorem]{Property}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{assumption}[theorem]{Assumption}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+% REF
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\crefname{theorem}{Theorem}{theorems}
+\crefname{property}{Property}{properties}
+\crefname{proposition}{Proposition}{propositions}
+\crefname{lemma}{Lemma}{Lemmas}
+\crefname{corollary}{Corollary}{corollaries}
+\crefname{definition}{Definition}{definitions}
+\crefname{assumption}{Assumption}{assumptions}
+\crefname{remark}{Remark}{remarks}
+\crefname{conjecture}{Conjecture}{conjectures}
+
 
 % ============================================================
 % Custom math/reference commands
@@ -478,11 +505,13 @@
     % --------------------------------------------------------
 
     \let\PaperOriginalAppendix\appendix
-
+    
     \renewcommand{\appendix}{%
         \PaperOriginalAppendix
         \etocdepthtag.toc{paperappendix}%
-        \PaperPrintAppendixTOC
+        \ifPaperAppendixTOC
+            \PaperPrintAppendixTOC
+        \fi
     }%
 }
 
