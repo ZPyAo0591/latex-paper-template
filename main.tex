@@ -1,5 +1,6 @@
 \documentclass{article}
 \usepackage{template}
+% \usepackage[appendixtoc]{template}
 
 % ============================================================
 % Optional packages
@@ -37,6 +38,7 @@
 % Double-column float control
 % \usepackage{stfloats}       % Mainly useful for two-column documents
 
+
 \title{Paper Title}
 
 % ============================================================
@@ -66,17 +68,17 @@
 % If author notes are not needed, simply omit \eqcontrib and \corrauthor.
 
 \author{
-	\PaperAuthor[1]{First Author}{first.author@example.com}
-	\quad
-	\PaperAuthor[1,2]{Second Author}{second.author@example.com}
-	\\
-	\PaperAffiliation[1]{Department, Institution}
-	\\
-	\PaperAffiliation[2]{Department, Institution}
-	%
-	% Optional project link:
-	% \\
-	% \PaperProject{https://github.com/username/project}
+    \PaperAuthor[1]{First Author\eqcontrib}{first.author@example.com}
+    \quad
+    \PaperAuthor[1,2]{Second Author\corrauthor}{second.author@example.com}
+    \\
+    \PaperAffiliation[1]{Department, Institution}
+    \quad
+    \PaperAffiliation[2]{Department, Institution}
+    %
+    % Optional project link:
+    \\
+    \PaperProject{https://github.com/username/project}
 }
 
 
