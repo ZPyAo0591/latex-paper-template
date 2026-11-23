@@ -12,7 +12,15 @@
 % ============================================================
 
 \newif\ifPaperAppendixTOC
+\newif\ifTemplateAnonymous
+\newif\ifTemplateLineNumbers
+
 \PaperAppendixTOCfalse
+
+% Optional features. Omit a command to disable the feature.
+\newcommand{\Anonymous}{\TemplateAnonymoustrue}
+\newcommand{\LineNumbers}{\TemplateLineNumberstrue}
+\newcommand{\AppendixTOC}{\PaperAppendixTOCtrue}
 
 \DeclareOption{appendixtoc}{\PaperAppendixTOCtrue}
 \DeclareOption{noappendixtoc}{\PaperAppendixTOCfalse}
@@ -218,6 +226,7 @@
 % ============================================================
 
 \RequirePackage{etoc}
+\RequirePackage{lineno}
 
 % ============================================================
 % Title
@@ -236,18 +245,29 @@
     % Title -> authors
     \vskip 0.25in
 
+
     % Authors
     {\normalsize
         \lineskip .5em
-        \begin{tabular}[t]{c}
-            \@author
-        \end{tabular}\par
+        \makebox[\textwidth][c]{%
+            \begin{tabular}[t]{c}
+                \ifTemplateAnonymous
+                    \textbf{Anonymous Author(s)}\\
+                    Affiliation\\
+                    Address\\
+                    \texttt{email}
+                \else
+                    \@author
+                \fi
+            \end{tabular}%
+        }\par
     }
 
     \endgroup
 
     % Author block -> abstract/main text
-    \vskip 0.30in
+    % \vskip 0.30in
+    \vskip 0.3in minus 0.1in
 }
 
 \makeatother
@@ -256,6 +276,7 @@
 % Author formatting
 % ============================================================
 
+
 \newcommand{\PaperAuthor}[3][]{%
     \begingroup
     \PaperThisEqualContribfalse
@@ -263,22 +284,25 @@
 
     \begin{tabular}{c}
         #2%
-        \if\relax\detokenize{#1}\relax
-        \else
-            \,\textsuperscript{#1}%
-        \fi
-        \ifPaperThisEqualContrib
-            \,\textsuperscript{\EqualContribSymbol}%
-        \fi
-        \ifPaperThisCorrespondingAuthor
-            \,\textsuperscript{\CorrespondingAuthorSymbol}%
-        \fi
+        \rlap{%
+            \if\relax\detokenize{#1}\relax
+            \else
+                \,\textsuperscript{#1}%
+            \fi
+            \ifPaperThisEqualContrib
+                \,\textsuperscript{\EqualContribSymbol}%
+            \fi
+            \ifPaperThisCorrespondingAuthor
+                \,\textsuperscript{\CorrespondingAuthorSymbol}%
+            \fi
+        }%
         \\
         \texttt{#3}
     \end{tabular}%
 
     \endgroup
 }
+
 
 \newcommand{\PaperAffiliation}[2][]{%
     \if\relax\detokenize{#1}\relax
@@ -289,7 +313,9 @@
 }
 
 \newcommand{\PaperProject}[1]{%
-    \href{#1}{\faGithub\ #1}%
+    \ifTemplateAnonymous\else
+        \href{#1}{\faGithub\ #1}%
+    \fi
 }
 
 % ============================================================
@@ -304,9 +330,12 @@
 \makeatletter
 
 \renewenvironment{abstract}{%
+    %\vspace{0.075in}%
     \begin{list}{}{%
         \setlength{\leftmargin}{0.6in}%
         \setlength{\rightmargin}{0.6in}%
+        \setlength{\topsep}{0pt}%
+        \setlength{\partopsep}{0pt}%
     }%
     \item[]
     {\centering
@@ -322,6 +351,29 @@
 }
 
 \makeatother
+
+
+% \makeatletter
+
+% \renewenvironment{abstract}{%
+%     \begin{list}{}{%
+%         \setlength{\leftmargin}{0.6in}%
+%         \setlength{\rightmargin}{0.6in}%
+%     }%
+%     \item[]
+%     {\centering
+%         \fontsize{11pt}{13pt}\selectfont
+%         \scshape\bfseries
+%         \abstractname\par
+%     }%
+%     \vspace{0.5ex}
+%     \normalsize
+% }{%
+%     \end{list}
+%     \vspace{1.0ex}%
+% }
+
+% \makeatother
 
 % ============================================================
 % Section headings
@@ -489,6 +541,11 @@
     % Mark the beginning of the main-paper portion of the TOC.
     \etocdepthtag.toc{papermain}%
 
+    % Avoid exposing author names in PDF metadata.
+    \ifTemplateAnonymous
+        \hypersetup{pdfauthor={Anonymous Author(s)}}%
+    \fi
+
     % --------------------------------------------------------
     % Automatically append author notes after \maketitle.
     % --------------------------------------------------------
@@ -497,7 +554,12 @@
 
     \renewcommand{\maketitle}{%
         \PaperOriginalMaketitle
-        \PaperPrintAuthorNotes
+        \ifTemplateAnonymous\else
+            \PaperPrintAuthorNotes
+        \fi
+        \ifTemplateLineNumbers
+            \linenumbers
+        \fi
     }%
 
     % --------------------------------------------------------
